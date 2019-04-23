@@ -23,6 +23,21 @@
   color: #61dafb;
 }
 
+Result
+EDIT ON
+ .ui.menu .item img.logo {
+  margin-right: 1.5em;
+}
+
+.main.container {
+    margin-top: 5em;
+}
+
+ul.ui.list li:before {
+  display: none;
+  content: '';
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -30,4 +45,6 @@
   to {
     transform: rotate(360deg);
   }
+
+  
 }
