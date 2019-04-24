@@ -31,8 +31,11 @@ import './App.css';
           </nav>
         </header>
       );
-    }    
+    }      
+           
   }
+
+
   
   class ContactsList extends React.Component {
     render () {
@@ -61,25 +64,33 @@ import './App.css';
   class ContactItem extends React.Component {
     render () {
       const { login, name, department } = this.props           
-      return (
-        <li className="item"> 
+      return (        
+        <li className="item" > 
           <UserAvatar login = {login}/>              
-          <div className="content">        
+          <div className="content" >        
             <h4 className="header">{name}</h4>
             <div className="description">{department}</div>
           </div>
         </li>
-      );
+      );    
     }
+         
   }   
+
+  
+
+  
 
   class UserAvatar extends React.Component {    
     render () {
       const {login} = this. props 
       const imgUrl = `https://api.adorable.io/avatars/55/${login}.png`;    
       return (
-        <img src={imgUrl} className="ui mini rounded image" />
+        <img src={imgUrl} className="ui mini rounded image" onClick = {this.onClickAvatar}/>
       );
+    }
+    onClickAvatar () {
+      alert("kliknieto!");
     }
   } 
 
