@@ -8,8 +8,9 @@ import './App.css';
         <div>
           <AppHeader/>
           <main className="ui main text container">
-            <ContactsList />
-          </main>
+            <ContactsList />            
+          </main>  
+          <CounterApp />        
         </div>
       );
     }    
@@ -73,14 +74,9 @@ import './App.css';
           </div>
         </li>
       );    
-    }
-         
-  }   
-
+    }         
+  }
   
-
-  
-
   class UserAvatar extends React.Component {    
     render () {
       const {login} = this. props 
@@ -91,7 +87,35 @@ import './App.css';
     }
     onClickAvatar () {
       alert("kliknieto!");
+      console.log("Uwaga")
     }
   } 
+
+  class CounterApp extends React.Component { 
+    constructor () {
+      super ();
+      this.state = {counter: 0};
+    }   
+    render () {
+      return (
+        <div>
+          <button onClick = {this.increment.bind(this)}>+</button>
+          <output>{this.state.counter}</output>
+          <button onClick= {this.decrement.bind(this)}>-</button>          
+        </div>
+      );
+    }
+    increment() {
+      this.setState ({
+        counter: this.state.counter + 1 
+      })
+    }
+
+    decrement() {
+      this.setState ({
+        counter: this.state.counter -1 
+      })
+    }
+  }
 
 export default App;
