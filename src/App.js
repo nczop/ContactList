@@ -52,17 +52,23 @@ import './App.css';
     );
   }
   
-  function ContactItem({ login, name, department }) {
-    const imgUrl = `https://api.adorable.io/avatars/55/${login}.png`;
+  function ContactItem({ login, name, department }) {    
     return (
-      <li className="item">
-        <img src={imgUrl} className="ui mini rounded image" />
-        <div className="content">
+      <li className="item"> 
+        <UserAvatar login = {login}/>              
+        <div className="content">        
           <h4 className="header">{name}</h4>
           <div className="description">{department}</div>
         </div>
       </li>
     );
   }   
+
+  function UserAvatar ({login}) {
+    const imgUrl = `https://api.adorable.io/avatars/55/${login}.png`;    
+    return (
+      <img src={imgUrl} className="ui mini rounded image" />
+    );
+  }
 
 export default App;
