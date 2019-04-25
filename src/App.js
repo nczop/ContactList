@@ -94,28 +94,31 @@ import './App.css';
   class CounterApp extends React.Component { 
     constructor () {
       super ();
-      this.state = {counter: 0};
-    }   
+      this.state = {counter: 0, sumOfClick: 0, sumOfDoubleClick: 0};
+    }       
     render () {
       return (
         <div>
           <button onClick = {this.increment.bind(this)}>+</button>
           <output>{this.state.counter}</output>
-          <button onClick= {this.decrement.bind(this)}>-</button>          
+          <button onClick= {this.decrement.bind(this)}>-</button> 
+          <br/>
+          <output>Sum of Click= {this.state.sumOfClick}</output>                                    
         </div>
       );
     }
     increment() {
       this.setState ({
-        counter: this.state.counter + 1 
-      })
+        counter: this.state.counter + 1,
+        sumOfClick: this.state.sumOfClick +1 
+      })      
     }
-
     decrement() {
       this.setState ({
-        counter: this.state.counter -1 
+        counter: this.state.counter -1,
+        sumOfClick: this.state.sumOfClick +1
       })
-    }
+    }        
   }
 
 export default App;
