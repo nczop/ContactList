@@ -10,7 +10,8 @@ import './App.css';
           <main className="ui main text container">
             <ContactsList />            
           </main>  
-          <CounterApp />        
+          <CounterApp /> 
+          <NameAndSurname/>       
         </div>
       );
     }    
@@ -118,7 +119,36 @@ import './App.css';
         counter: this.state.counter -1,
         sumOfClick: this.state.sumOfClick +1
       })
-    }        
+    }            
+  }
+
+  class NameAndSurname extends React.Component {
+    constructor () {
+      super ();
+      this.state = {name: "", surname: ""};
+    }
+    render() {
+      return (
+        <div>
+          <input value ={this.state.name} onInput={this.newName.bind(this)}/>          
+          <input value ={this.state.surname} onInput={this.newSurname.bind(this)}/>
+          <br/>
+          <output>name {this.state.name}</output>
+          <br/>
+          <output>surname {this.state.surname}</output>
+        </div>
+      )
+    }
+    newName (e) {
+      this.setState ({
+        name: e.target.value        
+      })
+    }
+    newSurname (e) {
+      this.setState ({
+        surname: e.target.value
+      })
+    }
   }
 
 export default App;
