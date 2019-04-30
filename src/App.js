@@ -11,7 +11,9 @@ import './App.css';
             <ContactsList />            
           </main>  
           <CounterApp /> 
-          <NameAndSurname/>       
+          <NameAndSurname/>
+          <Parent/>    
+          <Child/>          
         </div>
       );
     }    
@@ -133,15 +135,20 @@ import './App.css';
           <input value ={this.state.name} onInput={this.newName.bind(this)}/>          
           <input value ={this.state.surname} onInput={this.newSurname.bind(this)}/>
           <br/>
-          <output>name {this.state.name}</output>
+          <output>name: {this.state.name}</output>
           <br/>
-          <output>surname {this.state.surname}</output>
+          <output>surname: {this.state.surname}</output>
+          <br/>
+          <button onClick={this.cleanName.bind(this)}>Clean</button>
+          <br/>
+          <br/>
+          <br/>
         </div>
       )
     }
     newName (e) {
       this.setState ({
-        name: e.target.value        
+        name: e.target.value   
       })
     }
     newSurname (e) {
@@ -149,6 +156,84 @@ import './App.css';
         surname: e.target.value
       })
     }
+    cleanName () {
+      this.setState ({
+        name: ""
+      })
+    }
   }
+
+  class Parent extends React.Component {
+    constructor (props) {
+      super(props);
+      this.state = {
+        number: this.props.number,
+        input: this.props.input
+      };
+    }
+    handleChange (e) {
+      this.setState ({
+        input: e.target.value
+      })
+    }
+
+    sentToChild () {
+      this.setState ({
+        number: this.state.input
+      })
+    }
+     render () {
+       return (
+         <div>
+           <input onChange = {this.handleChange.bind(this)}/>
+           <button onClick = {this.sentToChild.bind(this)}>Sent</button>
+           <output>{this.state.number}</output>
+           <child parentNumber ={this.state.number}></child>           
+         </div>
+       )
+     };
+  }
+
+  class Child extends React.Component {
+    constructor (props) {
+      super(props);
+      this.state = {
+        parentNumber: this.props.number
+      };
+    }
+
+    componentWillReceiveProps (nextProps) {
+      if (nextProps.number != this.props.parentNumber) {
+        this.setState ({
+          parentNumber: nextProps.number
+        });
+      }
+    }
+
+    increment() {
+      this.setState({      
+        parentNumber: this.state.counter + 1,      
+      });    
+    }
+      
+    decrement() {      
+      this.setState({     
+        parentNumber: this.state.counter - 1,      
+      })
+    }
+
+    render() {
+      return (
+        <div>          
+          <button onClick= {this.increment.bind(this)}>+</button>
+          <output>{this.props.parentNumber}</output>
+          <button onClick= {this.decrement.bind(this)}>-</button>
+        </div>
+      )
+    }
+  }
+
+
+
 
 export default App;
