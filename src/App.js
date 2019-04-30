@@ -12,8 +12,7 @@ import './App.css';
           </main>  
           <CounterApp /> 
           <NameAndSurname/>
-          <Parent/>    
-          <Child/>          
+          <Parent/>                     
         </div>
       );
     }    
@@ -182,53 +181,49 @@ import './App.css';
         number: this.state.input
       })
     }
-     render () {
-       return (
-         <div>
-           <input onChange = {this.handleChange.bind(this)}/>
-           <button onClick = {this.sentToChild.bind(this)}>Sent</button>
-           <output>{this.state.number}</output>
-           <child parentNumber ={this.state.number}></child>           
-         </div>
-       )
-     };
-  }
-
-  class Child extends React.Component {
-    constructor (props) {
-      super(props);
-      this.state = {
-        parentNumber: this.props.number
-      };
-    }
 
     componentWillReceiveProps (nextProps) {
-      if (nextProps.number != this.props.parentNumber) {
+      if (nextProps.number !== this.props.parentNumber) {
         this.setState ({
           parentNumber: nextProps.number
         });
       }
     }
 
+    
+
+     render () {
+       return (
+         <div>
+           <input onChange = {this.handleChange.bind(this)}/>
+           <button onClick = {this.sentToChild.bind(this)} >Sent</button>           
+           <Child 
+            parentNumber ={this.state.number}>               
+           </Child>           
+         </div>
+       )
+     };
+  }
+  
+  class Child extends React.Component {  
     increment() {
       this.setState({      
-        parentNumber: this.state.counter + 1,      
+        parentNumber: this.state.parentNumber + 1,      
       });    
-    }
-      
+    }      
     decrement() {      
       this.setState({     
-        parentNumber: this.state.counter - 1,      
+        parentNumber: this.state.parentNumber - 1,      
       })
-    }
-
-    render() {
+    }  
+    render() {      
       return (
         <div>          
-          <button onClick= {this.increment.bind(this)}>+</button>
           <output>{this.props.parentNumber}</output>
-          <button onClick= {this.decrement.bind(this)}>-</button>
-        </div>
+          <br/>
+          <button onClick= {this.props.increment}>+</button>                     
+          <button onClick= {this.props.decrement}>-</button>             
+        </div>        
       )
     }
   }
