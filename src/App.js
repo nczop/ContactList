@@ -12,7 +12,8 @@ import './App.css';
           </main>  
           <CounterApp /> 
           <NameAndSurname/>
-          <Parent/>                     
+          <Parent/> 
+          <List/>                    
         </div>
       );
     }    
@@ -216,10 +217,72 @@ import './App.css';
           <output>{this.state.childNumber}</output>
           <br/>
           <button onClick= {this.increment.bind(this)}>+</button>                     
-          <button onClick= {this.decrement.bind(this)}>-</button>             
+          <button onClick= {this.decrement.bind(this)}>-</button>  
+          <br/>           
+          <br/>
         </div>        
       )
     }
   }
+
+  const allUsers = ['Michal', 'Kasia', 'Jacek', 'Marta', 'Tomek', 'Ania'];
+
+class List extends React.Component {
+  constructor() {
+    super();    
+    
+    this.state = {
+      filteredUsers: allUsers
+    };
+  }
+
+  filterUsers(e) {
+    const text = e.currentTarget.value;
+    const filteredUsers = this.getFilteredUsersForText(text)
+    this.setState({
+      filteredUsers
+    })
+  }
+  
+  getFilteredUsersForText(text) {
+    return allUsers.filter(user => user.toLowerCase().includes(text.toLowerCase()))
+  }
+  
+  render () {
+    return (
+      <div>
+        <input onInput={this.filterUsers.bind(this)} />
+        <UsersList users={this.state.filteredUsers} />
+      </div>
+    );
+  }
+};
+
+const UsersList = ({ users }) => {
+  if (users.length > 0) {
+    return (
+      <ul>
+        {users.map(user => <li key={user}>{user}</li>)}
+      </ul>
+    );
+  }
+
+  return (
+    <p>No results!</p>
+  );
+};
+
+
+  
+
+
+  
+
+
+
+  
+
+
+
 
 export default App;
