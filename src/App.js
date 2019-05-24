@@ -1,5 +1,7 @@
 import React from 'react';
 import './App.css';
+import { shallow } from 'enzyme';
+
 
 
   class App extends React.Component {
@@ -19,18 +21,19 @@ import './App.css';
     }    
   }
   
+
   class AppHeader extends React.Component {
     render () { 
       return (    
         <header className="ui fixed menu">  
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css"></link>  
-          <nav class="ui container">
-            <a href="#" class="header item">
-              <img class="logo" src="https://typeofweb.com/wp-content/uploads/2017/08/cropped-typeofweb_logo-04-white-smaller-1-e1504359870362.png" />
+          <nav className="ui container">
+            <a href="#" className="header item">
+              <img className="logo" src="https://typeofweb.com/wp-content/uploads/2017/08/cropped-typeofweb_logo-04-white-smaller-1-e1504359870362.png" />
               Lista kontaktów
             </a>
-            <div class="header item">
-              <button class="ui button">Dodaj</button>
+            <div className="header item">
+              <button className="ui button">Dodaj</button>
             </div>
           </nav>
         </header>
@@ -132,8 +135,8 @@ import './App.css';
     render() {
       return (
         <div>
-          <input value ={this.state.name} onInput={this.newName.bind(this)}/>          
-          <input value ={this.state.surname} onInput={this.newSurname.bind(this)}/>
+          <input value ={this.state.name} onChange={this.newName.bind(this)}/>          
+          <input value ={this.state.surname} onChange={this.newSurname.bind(this)}/>
           <br/>
           <output>name: {this.state.name}</output>
           <br/>
@@ -225,7 +228,7 @@ import './App.css';
     }
   }
 
-  const allUsers = ['Michal', 'Kasia', 'Jacek', 'Marta', 'Tomek', 'Ania'];
+const allUsers = ['Michal', 'Kasia', 'Jacek', 'Marta', 'Tomek', 'Ania'];
 
 class List extends React.Component {
   constructor() {
@@ -271,6 +274,41 @@ const UsersList = ({ users }) => {
     <p>No results!</p>
   );
 };
+
+
+
+it('includes input', () => {
+  const parent = shallow(<Parent />);
+  expect (parent.containsMatchingElement(<input />)).toEqual(true)
+});
+
+it ('includes UserList' , () => {
+  const app = shallow (<App />);
+  expect (app.containsMatchingElement (<ContactsList />)).toEqual(true)
+});
+
+it ('show message when there are no value' , () => {
+  const userList = shallow(<UsersList users = {[]} />);
+  expect (userList.text()).toContain('No results!')
+});
+
+it ('doesnt show message when there are users', () => {
+  const userList = shallow (<UsersList users = {['Michal']} /> );
+  expect (userList.text()).not.toContain('No results!')
+});
+
+it('passes all users to the UsersList', () => {
+  const app = shallow(<List />);
+  expect(app.find('UsersList').prop('users')).toEqual(['Michal', 'Kasia', 'Jacek', 'Marta', 'Tomek', 'Ania']);
+});
+
+it ('filters names on input' , () => {
+  const app = shallow (<List />);
+  expect(app.find('UsersList').prop('users')).toEqual(['Michal', 'Kasia', 'Jacek', 'Marta', 'Tomek', 'Ania']);
+
+  app.find('input').simulate('input', {currentTarget: {value: ''}})
+  expect(app.find('UsersList').prop('users')).toEqual(['Michal', 'Kasia', 'Jacek', 'Marta', 'Tomek', 'Ania']);
+});
 
 
   
